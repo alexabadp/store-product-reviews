@@ -5,7 +5,9 @@ import styles from '../styles.css'
 
 const Star: FunctionComponent<StarProps> = ({ filled, onClick, index = 0 }) => {
   const style = filled ? styles['star--filled'] : styles['star--empty']
+  // const content = filled ? '★' : '☆'
   const content = filled ? '★' : '☆'
+  // const content = filled ? 'https://coolboxmx.vtexassets.com/arquivos/commets-star-empty.svg' : 'https://coolboxmx.vtexassets.com/arquivos/commets-star-empty.svg'
 
   const handleClick = (
     event:
@@ -27,6 +29,7 @@ const Star: FunctionComponent<StarProps> = ({ filled, onClick, index = 0 }) => {
         handleClick(event, index)
       }
     >
+      {/* <img src={content} alt="" width='20px' /> */}
       {content}
     </span>
   )

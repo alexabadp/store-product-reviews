@@ -4,7 +4,8 @@ import type { ApolloQueryResult } from 'apollo-client'
 import { useApolloClient } from 'react-apollo'
 import { FormattedMessage, defineMessages, useIntl } from 'react-intl'
 import { useCssHandles } from 'vtex.css-handles'
-import { Card, Input, Button, Textarea } from 'vtex.styleguide'
+// import { Card, Input, Button, Textarea } from 'vtex.styleguide'
+import { Input, Button, Textarea } from 'vtex.styleguide'
 
 import NewReview from '../graphql/newReview.graphql'
 import HasShopperReviewed from '../graphql/hasShopperReviewed.graphql'
@@ -401,11 +402,12 @@ export function ReviewForm({
   }
 
   return (
-    <div className={`${handles.formContainer} bg-muted-5 pa5 mt2`}>
-      <Card>
-        <h3>
+    // <div className={`${handles.formContainer} bg-muted-5 pa5 mt2`}>
+    <div className={`${handles.formContainer} bg-muted-5 mt2`}>
+      <div>
+        {/* <h3 className={'mt0'}>
           <FormattedMessage id="store/reviews.form.title" />
-        </h3>
+        </h3> */}
         {state.reviewSubmitted ? (
           <h5>
             <FormattedMessage id="store/reviews.form.reviewSubmitted" />
@@ -416,29 +418,6 @@ export function ReviewForm({
           </div>
         ) : (
           <form>
-            <div
-              className={`${handles.formSection} ${handles.formBottomLine} mv3`}
-            >
-              <Input
-                label={intl.formatMessage(messages.reviewTitleLabel)}
-                size="large"
-                value={state.title}
-                required
-                onChange={(event: React.FormEvent<HTMLInputElement>) =>
-                  dispatch({
-                    type: 'SET_TITLE',
-                    args: {
-                      title: event.currentTarget.value,
-                    },
-                  })
-                }
-                errorMessage={
-                  state.showValidationErrors && !state.validation.hasTitle
-                    ? intl.formatMessage(messages.requiredField)
-                    : ''
-                }
-              />
-            </div>
             <div className={`${handles.formSection} ${handles.formRating} mv3`}>
               <StarPicker
                 label={intl.formatMessage(messages.ratingLabel)}
@@ -453,11 +432,38 @@ export function ReviewForm({
                 }}
               />
             </div>
+            <div className={`${handles.formSection} ${handles.formBottomLine} mv3`}>
+              <Input
+                label={intl.formatMessage(messages.reviewTitleLabel)}
+                size="large"
+                value={state.title}
+                required
+                minLength={3}
+                maxLength={18}
+                onChange={(event: React.FormEvent<HTMLInputElement>) =>
+                  dispatch({
+                    type: 'SET_TITLE',
+                    args: {
+                      title: event.currentTarget.value,
+                    },
+                  })
+                 
+                }
+                errorMessage={
+                  state.showValidationErrors && !state.validation.hasTitle
+                    ? intl.formatMessage(messages.requiredField)
+                    : ''
+                }
+              />
+            </div>
+
             <div className={`${handles.formSection} ${handles.formName} mv3`}>
               <Input
                 label={intl.formatMessage(messages.nameLabel)}
                 size="large"
                 value={state.reviewerName}
+                minLength={3}
+                maxLength={20}
                 onChange={(event: React.FormEvent<HTMLInputElement>) =>
                   dispatch({
                     type: 'SET_NAME',
@@ -560,7 +566,7 @@ export function ReviewForm({
             </div>
           </form>
         )}
-      </Card>
+      </div>
     </div>
   )
 }

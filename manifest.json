@@ -1,7 +1,7 @@
 {
-  "name": "reviews-and-ratings",
-  "vendor": "vtex",
-  "version": "3.14.4",
+  "name": "store-reviews-and-ratings",
+  "vendor": "coolboxmx",
+  "version": "0.0.1",
   "title": "Reviews and Ratings",
   "description": "admin/reviews.reviewsandratings.description",
   "builders": {
@@ -23,7 +23,8 @@
     "vtex.tenant-graphql": "0.x",
     "vtex.channels-components": "4.x",
     "vtex.paginated-table": "0.x",
-    "vtex.css-handles": "0.x"
+    "vtex.css-handles": "0.x",
+    "vtex.modal-layout": "0.x"
   },
   "billingOptions": {
     "termsURL": "https://compliance.vtex.com/gdpr/policies/vtex-privacy-policy",
