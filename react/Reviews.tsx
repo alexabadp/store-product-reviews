@@ -16,7 +16,7 @@ import {
   // Button,
 } from 'vtex.styleguide'
 
-import {ModalTrigger, Modal, ModalContent} from 'vtex.modal-layout';
+import {ModalTrigger, ModalHeader, Modal, ModalContent} from 'vtex.modal-layout';
 
 import type { Review } from './typings'
 import Stars from './components/Stars'
@@ -117,6 +117,8 @@ type ReducerActions =
   | { type: 'SET_AUTHENTICATED'; args: { authenticated: boolean } }
 
 const reducer = (state: State, action: ReducerActions) => {
+
+  console.log("configuración actual",state)
   switch (action.type) {
     case 'SET_NEXT_PAGE':
       return {
@@ -335,7 +337,8 @@ const CSS_HANDLES = [
   'buttonModal',
   'reviewsEmptyState',
   'reviewDateTime',
-  'reviewText'
+  'reviewText',
+  'reviewModalHeader'
 ] as const
 
 const getTimeAgo = (time: string, intl: any) => {
@@ -569,6 +572,8 @@ function Reviews() {
       .then((response: ApolloQueryResult<SettingsData>) => {
         const settings = response.data.appSettings
 
+        console.log("setting", settings)
+
         dispatch({
           type: 'SET_SETTINGS',
           args: { settings },
@@ -704,6 +709,11 @@ function Reviews() {
                       </span>
                     </button>
                     <Modal>
+                    <ModalHeader iconCloseSize={30}>
+                      <h2 className={`${handles.reviewModalHeader}`}>
+                        Test de cabecera
+                      </h2>
+                    </ModalHeader>
                       <ModalContent>
                         <ReviewForm
                         settings={state.settings}
