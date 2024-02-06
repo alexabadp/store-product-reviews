@@ -123,15 +123,15 @@ const reducer = (state: State, action: ReducerActions) => {
     case 'SET_NEXT_PAGE':
       return {
         ...state,
-        from: state.total < 11 ? state.from : state.from + 10,
-        to: state.to + 10 > state.total ? state.total : state.to + 10,
+        from: state.total < 101 ? state.from : state.from + 100,
+        to: state.to + 100 > state.total ? state.total : state.to + 100,
       }
 
     case 'SET_PREV_PAGE':
       return {
         ...state,
-        from: state.from - (state.from < 11 ? 0 : 10),
-        to: state.from > 10 ? state.from - 1 : state.to,
+        from: state.from - (state.from < 101 ? 0 : 100),
+        to: state.from > 100 ? state.from - 1 : state.to,
       }
 
     case 'TOGGLE_REVIEW_FORM':
@@ -215,7 +215,15 @@ const reducer = (state: State, action: ReducerActions) => {
     case 'SET_SETTINGS':
       return {
         ...state,
-        settings: action.args.settings,
+        // settings: action.args.settings,
+        settings: {
+          defaultOpen: false,
+          defaultOpenCount: 0,
+          allowAnonymousReviews: true,
+          requireApproval: true,
+          useLocation: false,
+          showGraph: false,
+        }
       }
 
     case 'SET_AUTHENTICATED':
@@ -403,7 +411,7 @@ function Reviews() {
     localeOptions: [],
     pastReviews: true,
     from: 1,
-    to: 10,
+    to: 100,
     reviews: null,
     total: 0,
     average: 0,
@@ -437,8 +445,10 @@ function Reviews() {
       rating: state.ratingFilter,
       locale: state.localeFilter,
       pastReviews: state.pastReviews,
-      from: state.from - 1,
-      to: state.to - 1,
+      // from: state.from - 1,
+      // to: state.to - 1,
+      from: 0,
+      to: 100,
       orderBy: state.sort,
       status: !state.settings?.requireApproval ? '' : 'true',
     },
@@ -584,6 +594,8 @@ function Reviews() {
   useEffect(() => {
     if (loadingAverage || !dataAverage) return
 
+    console.log("dataAverage", dataAverage)
+
     let { average } = dataAverage.averageRatingByProductId
 
     if (state.total <= 10) {
@@ -622,8 +634,11 @@ function Reviews() {
 
   useEffect(() => {
     if (loadingReviews || !dataReviews) return
-    const reviews = dataReviews.reviewsByProductId.data
-    const { total } = dataReviews.reviewsByProductId.range
+    // const reviews = dataReviews.reviewsByProductId.data
+    // const { total } = dataReviews.reviewsByProductId.range
+    const reviews = (dataReviews.reviewsByProductId.data).filter(element => element.productId === productId && element.approved === true)
+    const total = reviews?.length
+
 
     dispatch({
       type: 'SET_REVIEWS',
@@ -667,18 +682,17 @@ function Reviews() {
             ) : (
               <Fragment>
                 <div className={`${handles.starsContainer} t-heading-4 flex items-center`}>
-                  <div className={`mr5`}>
-                    <Stars rating={state.average} />
-                  </div>
-      
-                  (<span className={`${handles.reviewsRatingAverage} review__rating--average dib v-mid`}>
+                  <span className={`${handles.reviewsRatingAverage} review__rating--average dib v-mid`}>
                     <FormattedMessage
                       id="store/reviews.list.summary.averageRating"
                       values={{
                         average: state.average,
                       }}
                     />
-                  </span>)
+                  </span>
+                  <div className={`ml5`}>
+                    <Stars rating={state.average} />
+                  </div>
                 </div>
                 <span
                   className={`${handles.reviewsRatingCount} review__rating--count dib v-mid`}
@@ -711,7 +725,7 @@ function Reviews() {
                     <Modal>
                     <ModalHeader iconCloseSize={30}>
                       <h2 className={`${handles.reviewModalHeader}`}>
-                        Test de cabecera
+                        Califica tu producto
                       </h2>
                     </ModalHeader>
                       <ModalContent>
@@ -808,8 +822,8 @@ function Reviews() {
       </div>
       <div className={`${handles.reviewsRight}`}>
         {/* <div className=''> */}
+          <div className={`${handles.reviewComentsTitle}`}>Comentarios</div>
           <div className={`${handles.reviewCommentsContainer} review__comments`}>
-            <div className={`${handles.reviewComentsTitle}`}>Comentarios</div>
             {state.reviews === null ? (
               <FormattedMessage id="store/reviews.list.loading" />
             ) : state.reviews.length ? (

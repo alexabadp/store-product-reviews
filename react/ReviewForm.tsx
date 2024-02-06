@@ -204,6 +204,8 @@ const CSS_HANDLES = [
   'formReview',
   'formSubmit',
   'formInvalidMessage',
+  'textReviewSubmitted',
+  'containerReviewSubmitted'
 ] as const
 
 export function ReviewForm({
@@ -409,9 +411,12 @@ export function ReviewForm({
           <FormattedMessage id="store/reviews.form.title" />
         </h3> */}
         {state.reviewSubmitted ? (
-          <h5>
-            <FormattedMessage id="store/reviews.form.reviewSubmitted" />
-          </h5>
+          <div className={`${handles.containerReviewSubmitted}`}>
+            <img width="40px" src="https://coolboxmx.vtexassets.com/arquivos/checkok1.svg" alt="checkok" />
+            <h5 className={`${handles.textReviewSubmitted}`}>
+              <FormattedMessage id="store/reviews.form.reviewSubmitted" />
+            </h5>
+          </div>
         ) : state.alreadySubmitted ? (
           <div className="c-danger t-small mt3 lh-title">
             <FormattedMessage id="store/reviews.form.alreadySubmitted" />
@@ -439,7 +444,7 @@ export function ReviewForm({
                 value={state.title}
                 required
                 minLength={3}
-                maxLength={18}
+                maxLength={20}
                 onChange={(event: React.FormEvent<HTMLInputElement>) =>
                   dispatch({
                     type: 'SET_TITLE',
@@ -506,6 +511,8 @@ export function ReviewForm({
                   label={intl.formatMessage(messages.emailLabel)}
                   size="large"
                   value={state.shopperId}
+                  minLength={3}
+                  maxLength={30}
                   onChange={(event: React.FormEvent<HTMLInputElement>) =>
                     dispatch({
                       type: 'SET_ID',
@@ -526,6 +533,9 @@ export function ReviewForm({
             <div className={`${handles.formSection} ${handles.formReview} mv3`}>
               <Textarea
                 value={state.text}
+                minLength={3}
+                maxLength={150}
+                resize="none"
                 onChange={(event: React.FormEvent<HTMLTextAreaElement>) =>
                   dispatch({
                     type: 'SET_TEXT',
