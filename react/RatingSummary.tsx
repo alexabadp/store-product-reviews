@@ -80,11 +80,11 @@ const initialState = {
     defaultOpen: false,
     defaultStarsRating: 5,
     defaultOpenCount: 0,
-    allowAnonymousReviews: false,
+    allowAnonymousReviews: true,
     requireApproval: true,
     useLocation: false,
     showGraph: false,
-    displaySummaryIfNone: false,
+    displaySummaryIfNone: true,
     displayInlineIfNone: false,
     displaySummaryTotalReviews: true,
     displaySummaryAddButton: false,
@@ -111,7 +111,21 @@ const reducer = (state: State, action: ReducerActions) => {
     case 'SET_SETTINGS':
       return {
         ...state,
-        settings: action.args.settings,
+        // settings: action.args.settings,
+        settings: {
+          "allowAnonymousReviews": false,
+          "requireApproval": false,
+          "useLocation": false,
+          "defaultOpen": false,
+          "defaultStarsRating": 0,
+          "defaultOpenCount": 0,
+          "showGraph": false,
+          "displaySummaryIfNone": true,
+          "displayInlineIfNone": false,
+          "displaySummaryTotalReviews": false,
+          "displaySummaryAddButton": false,
+          "__typename": "AppSettings"
+      },
       }
 
     case 'SET_AUTHENTICATED':

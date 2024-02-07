@@ -598,15 +598,15 @@ function Reviews() {
 
     let { average } = dataAverage.averageRatingByProductId
 
-    if (state.total <= 10) {
-      const summedRating = state.reviews?.reduce(
-        (partialSum, a) => partialSum + a.rating,
-        0
-      )
+    // if (state.total <= 10) {
+    //   const summedRating = state.reviews?.reduce(
+    //     (partialSum, a) => partialSum + a.rating,
+    //     0
+    //   )
 
-      average = summedRating ? summedRating / state.total : average
-      average = Math.round((average + Number.EPSILON) * 100) / 100 // limit to 2 decimal places
-    }
+    //   average = summedRating ? summedRating / state.total : average
+    //   average = Math.round((average + Number.EPSILON) * 100) / 100 // limit to 2 decimal places
+    // }
 
     dispatch({
       type: 'SET_AVERAGE',
