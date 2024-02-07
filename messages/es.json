@@ -68,7 +68,7 @@
   "store/reviews.list.summary.loading": "Cargando el resumen…",
   "store/reviews.list.summary.averageRating": "{average, select, 0 {--} other {{average}}}",
   "store/reviews.list.summary.totalReviews": "({total} {total, plural, =1 {comentario} other {comentarios}})",
-  "store/reviews.list.writeReview": "Escribe un comentario",
+  "store/reviews.list.writeReview": "Dejar comentario",
   "store/reviews.list.login": "Inicia sesión y escribe un comentario",
   "store/reviews.list.loading": "Cargando comentarios…",
   "store/reviews.list.verifiedPurchaser": "Comprador verificado",
